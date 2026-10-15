@@ -28,6 +28,7 @@ DAG_ID = "listing_scoring_dag"
 POSTGRES_CONN_ID = "postgres_raw"      # Airflow Connection к PostgreSQL
 S3_CONN_ID = "s3_features"             # Airflow Connection к S3
 SCHEMA = "final_project"
+SCHEMA_PREDICT = "public"
 PREDICT_TABLE = "smartscore_predict"
 # Значения по умолчанию; в Airflow можно переопределить через Variables
 DEFAULT_MODEL_PREFIX = "models/high_demand_catboost/v1/"
@@ -54,7 +55,7 @@ with DAG(
 
     @task(task_id="check_model_on_s3")
     def check_model_on_s3():
-        """Падает, если в S3 нет модели, meta или artifacts."""
+        """Проверяет есть ли в S3 модель, meta, artifacts."""
         prefix = get_model_prefix()
         check_objects_exist(S3_CONN_ID, [
             prefix + "catboost_final.cbm",
@@ -118,9 +119,9 @@ with DAG(
 
     @task(task_id="save_to_db")
     def save_to_db(pred_info):
-        """Записывает предсказания в final_project.smartscore_predict (если за дату ещё нет)."""
+        """Записывает предсказания в public.smartscore_predict (если за дату ещё нет)."""
         result = download_dataframe(S3_CONN_ID, pred_info["predictions_key"])
-        return save_predictions(result, POSTGRES_CONN_ID, SCHEMA, PREDICT_TABLE, pred_info["run_date"])
+        return save_predictions(result, POSTGRES_CONN_ID, SCHEMA_PREDICT, PREDICT_TABLE, pred_info["run_date"])
 
     # Порядок выполнения
     with TaskGroup("load_data"):

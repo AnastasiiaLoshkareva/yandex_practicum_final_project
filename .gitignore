@@ -1,3 +1,6 @@
 venv/
 # секреты и локальные настройки
 .env
+
+.ipynb_checkpoints/
+.env
