@@ -1,1 +1,16 @@
- 
+# Python 3.12 (версия задаётся при создании venv и в среде Airflow)
+
+# Airflow (Python 3.12 compatible)
+apache-airflow==2.9.2
+apache-airflow-providers-postgres==5.11.0
+apache-airflow-providers-amazon==8.20.0
+
+# Предобработка и модель: версии из venv на Python 3.12, в котором обучена модель
+numpy==1.26.4
+pandas==2.2.2
+catboost==1.2.10
+
+# Инфраструктура
+boto3==1.34.34
+botocore==1.34.34
+psycopg2-binary==2.9.9
