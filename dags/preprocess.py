@@ -107,9 +107,8 @@ def preprocess_features(df_full, artifacts, meta, run_date):
     # Значения больше 1125 - это "заглушка" (2 147 483 647), заменяем их на пропуск, т.к. реальные значения не известны
     df.loc[df['maximum_nights'] > 1125, 'maximum_nights'] = np.nan
 
-    # преобразуем к числовому типу host_response_rate,host_acceptance_rate
-    df['host_response_rate'] = df['host_response_rate'].str.replace('%','').astype(float)
-    df['host_acceptance_rate'] = df['host_acceptance_rate'].str.replace('%','').astype(float)
+    # преобразуем к числовому типу host_acceptance_rate
+    df['host_acceptance_rate'] = pd.to_numeric(df['host_acceptance_rate'].astype(str).str.replace('%', ''), errors='coerce')
 
     # заменяем пропуски в bathrooms на значение из bathrooms_text
     # Достаём число из текста: "1.5 baths" -> 1.5, "1 shared bath" -> 1.0
