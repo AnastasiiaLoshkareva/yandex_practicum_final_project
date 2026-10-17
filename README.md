@@ -1,3 +1,5 @@
+ AirFlow login: af_ds_20260714_53fe25f3f1
+ SSH-адрес репозитория на GitLab: git@ds-practicum.gitlab.yandexcloud.net:s4736349/listings-scoring.git
  # SmartScore: батч-инференс высокого спроса на объявления
 
 Проект предсказывает для объявлений об аренде жилья (10 городов: Amsterdam, Chicago, Los Angeles, London, Lyon, Munich, New York, Paris, Toronto, Vienna) бинарный признак `is_high_demand` («спрос на объект значимо выше, чем у похожих объявлений»). Обучение и исследование выполнены в Jupyter-ноутбуках, батч-инференс на тестовом срезе автоматизирован в Apache Airflow, результат записывается в таблицу PostgreSQL.
